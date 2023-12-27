@@ -1,0 +1,9 @@
+com\mkyong\entity\Customer.class
+com\mkyong\web\HelloController.class
+com\mkyong\repository\CustomerRepository.class
+com\mkyong\config\PersistenceJPAConfig.class
+com\mkyong\config\SpringWebConfig.class
+com\mkyong\MyServletInitializer.class
+com\mkyong\web\CustomerController.class
+com\mkyong\service\Impl\CustomerServiceImpl.class
+com\mkyong\service\CustomerService.class
