@@ -16,21 +16,34 @@
 
 <body>
 <div th:replace="navbar :: header"> </div>
-
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#">Tech Titans</a>
 </nav>
 
-<main role="main" class="container">
-
-    <div class="starter-template">
-        <h1>Spring Web MVC Thymeleaf Example</h1>
-        <h2>
-            <span th:text="'Hello, ' + ${message}"></span>
-        </h2>
+<div class="container">
+    <h2>Category List</h2>
+    <div class="my-3">
+        <a class="btn btn-primary" th:href="@{/categories/categoryForm}">Add New Category</a>
     </div>
-
-</main>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}"></td>
+            <td th:text="${category.name}"></td>
+            <td><a class="btn btn-info" th:href="@{/categories/categoryForm/{id}(id=${category.id})}">Edit</a></td>
+            <td><a class="btn btn-danger" th:href="@{/categories/delete/{id}(id=${category.id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <!-- /.container -->
 
 <!-- Boostrap core js -->

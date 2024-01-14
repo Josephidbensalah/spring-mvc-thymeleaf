@@ -15,21 +15,39 @@
 </head>
 
 <body>
-
+<div th:replace="navbar :: header"> </div>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#">Tech Titans</a>
 </nav>
 
-<main role="main" class="container">
-
-    <div class="starter-template">
-        <h1>List Customers</h1>
-        <h2>
-            <span th:text="'Hello, ' + ${message}"></span>
-        </h2>
+<div class="container">
+    <h2>Customer List</h2>
+    <div class="my-3">
+        <a class="btn btn-primary" th:href="@{/customers/customerForm}">Add New Customer</a>
     </div>
-
-</main>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.firstName}"></td>
+            <td th:text="${customer.lastName}"></td>
+            <td th:text="${customer.email}"></td>
+            <td><a class="btn btn-info" th:href="@{/customers/customerForm/{id}(id=${customer.id})}">Edit</a></td>
+            <td><a class="btn btn-danger" th:href="@{/customers/delete/{id}(id=${customer.id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <!-- /.container -->
 
 <!-- Boostrap core js -->

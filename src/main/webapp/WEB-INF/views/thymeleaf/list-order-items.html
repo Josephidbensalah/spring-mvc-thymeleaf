@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="navbar :: header"> </div>
+<div class="container">
+    <h2>Order Item List</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Order</th>
+            <th>Product</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderItem : ${orderItems}">
+            <td th:text="${orderItem.id}"></td>
+            <td th:text="${orderItem.order.id}"></td>
+            <td th:text="${orderItem.product.name}"></td>
+            <td th:text="${orderItem.quantity}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

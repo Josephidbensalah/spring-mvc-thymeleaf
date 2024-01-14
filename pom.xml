@@ -105,6 +105,12 @@
             <version>2.1.214</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
         <!-- compile only, deployed container will provide this -->
         <!--
         <dependency>

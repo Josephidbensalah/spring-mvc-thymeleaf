@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Spring Web MVC Thymeleaf Hello World Example</title>
+
+    <!-- Boostrap core css -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+
+    <!-- custom style -->
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+<body>
+<div th:replace="navbar :: header"> </div>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Tech Titans</a>
+</nav>
+
+<div class="container">
+    <h2>Add/Update Customer</h2>
+    <form action="#" th:action="@{/products/saveProduct}" th:object="${productDTO}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}">
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" class="form-control" id="description" th:field="*{description}">
+        </div>
+
+        <label for="categoryId">Customer:</label>
+        <h4 th:text="${categoryId}"></h4>
+        <select th:field="*{categoryId}" class="form-control">
+            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
+                    th:selected="${category.id == productDTO.categoryId}"></option>
+        </select>
+
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" min="0" step="0.01" class="form-control" id="price" th:field="*{price}">
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" min="0" class="form-control" id="quantity" th:field="*{quantity}">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

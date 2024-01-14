@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Update Order</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="navbar :: header"> </div>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Tech Titans</a>
+</nav>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Add/Update Order</h2>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/orders/saveOrder2}" th:object="${orderDTO}" method="post">
+                        <input type="hidden" th:field="*{id}">
+                        
+                        <label for="customerId">Customer:</label>
+                        <h4 th:text="${customerId}"></h4>
+                        <select th:field="*{customerId}" class="form-control">
+                            <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.firstname}"
+                                    th:selected="${customer.id == orderDTO.customerId}"></option>
+                        </select>
+
+                        <br>
+
+                        <label for="orderDate">Order Date:</label>
+
+                        <input type="date" th:field="*{orderDate}" class="form-control">
+
+                        <label for="shipped">Shipped:</label>
+                        <input type="checkbox" id="shipped" th:field="*{shipped}"><br>
+
+                        <label for="productIds">Products:</label>
+                        <select id="productIds" th:field="*{orderItems}" class="form-control" multiple required>
+                            <!-- Assume products is a list of ProductDTO objects -->
+<!--                            <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"-->
+<!--                                    th:selected="${orderDTO.productIds != null and orderDTO.productIds.contains(product.id)}"></option>-->
+
+                            <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"
+                                    th:selected="${orderDTO.orderItems != null and orderDTO.orderItems.?[productId == product.id] != null}"></option>
+                        </select>
+
+                        <!-- You can add other fields here based on your requirements -->
+
+                        <button class="btn btn-primary" type="submit" th:text="${orderDTO.id == null ? 'Add Order' : 'Update Order'}"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- ... (previous HTML code) ... -->
+
+<!-- ... (previous HTML code) ... -->
+
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Spring Web MVC Thymeleaf Hello World Example</title>
+
+    <!-- Boostrap core css -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+
+    <!-- custom style -->
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="navbar :: header"> </div>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Tech Titans</a>
+</nav>
+
+
+<div class="container">
+    <h2>Order List</h2>
+    <div class="my-3">
+        <a class="btn btn-primary" th:href="@{/orders/orderForm}">Add New Order</a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Order Date</th>
+            <th>Shipped</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.customer.firstName + ' ' + order.customer.lastName}"></td>
+            <td th:text="${order.orderDate}"></td>
+            <td th:text="${order.shipped}"></td>
+            <td><a class="btn btn-info" th:href="@{/orders/orderForm/{id}(id=${order.id})}">Edit</a></td>
+            <td><a class="btn btn-danger" th:href="@{/orders/delete/{id}(id=${order.id})}">Delete</a></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

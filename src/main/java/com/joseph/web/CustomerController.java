@@ -7,18 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.joseph.entity.Customer;
 // import com.joseph.exception.ResourceNotFoundException;
 import com.joseph.service.CustomerService;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 public class CustomerController {
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomerController.class);
@@ -26,38 +22,47 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/list")
+    @GetMapping({"/list", "/"})
     public String listCustomers(Model theModel) {
         List<Customer> theCustomers = customerService.getCustomers();
         theModel.addAttribute("customers", theCustomers);
         return "list-customers";
     }
 
-    @GetMapping("/showForm")
-    public String showFormForAdd(Model theModel) {
-        LOG.debug("inside show customer-form handler method");
-        Customer theCustomer = new Customer();
-        theModel.addAttribute("customer", theCustomer);
-        return "customer-form";
+    @GetMapping("/customerForm")
+    public String customerForm(Model model) {
+        model.addAttribute("customer", new Customer());
+        System.out.println("********* Add Customer *********");
+        System.out.println("inside the Customer Form for adding new Customer ");
+        System.out.println("Customer : "+model.getAttribute("customer").toString());
+        System.out.println("********* end Add Customer **********");
+        return "customerForm";
+    }
+    @GetMapping("/customerForm/{id}")
+    public String customerForm(@PathVariable("id") Long id, Model model) {
+        Customer customer = customerService.getCustomer(id);
+        model.addAttribute("customer", customer);
+
+        System.out.println("********* Update Customer *********");
+        System.out.println("inside the Customer Form for updating existing Customer ");
+        System.out.println("Customer : "+model.getAttribute("customer").toString());
+        System.out.println("********* end Update Customer **********");
+        return "customerForm";
     }
 
     @PostMapping("/saveCustomer")
     public String saveCustomer(@ModelAttribute("customer") Customer theCustomer) {
+        System.out.println("********* Saving(add / update ) Customer *********");
+        System.out.println("inside the Customer Save method ");
+        System.out.println("Customer : "+theCustomer.toString());
+        System.out.println("********* Add Customer **********");
         customerService.saveCustomer(theCustomer);
-        return "redirect:/customer/list";
+        return "redirect:/customers/list";
     }
 
-    /*@GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("customerId") int theId,
-                                    Model theModel) throws NullPointerException {
-        Customer theCustomer = customerService.getCustomer(theId);
-        theModel.addAttribute("customer", theCustomer);
-        return "customer-form";
-    }*/
-
-    @GetMapping("/delete")
-    public String deleteCustomer(@RequestParam("customerId") int theId) throws NullPointerException {
-        customerService.deleteCustomer(theId);
-        return "redirect:/customer/list";
+    @GetMapping("/delete/{id}")
+    public String deleteCustomer(@PathVariable("id") Long id) throws NullPointerException {
+        customerService.deleteCustomer(id);
+        return "redirect:/customers/list";
     }
 }

@@ -31,14 +31,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public Customer getCustomer(int id) throws NullPointerException {
+    public Customer getCustomer(Long id) throws NullPointerException {
         return customerRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("Customer with ID = ${id} is not found"));
     }
 
     @Override
     @Transactional
-    public void deleteCustomer(int theId) {
+    public void deleteCustomer(Long theId) {
         customerRepository.deleteById(theId);
     }
 }

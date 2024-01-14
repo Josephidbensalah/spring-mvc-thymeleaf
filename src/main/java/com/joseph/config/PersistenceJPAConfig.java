@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -59,6 +60,9 @@ public class PersistenceJPAConfig {
         hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
         hibernateProperties.setProperty("hibernate.cache.use_second_level_cache", env.getProperty("hibernate.cache.use_second_level_cache"));
         hibernateProperties.setProperty("hibernate.cache.use_query_cache", env.getProperty("hibernate.cache.use_query_cache"));
+//        hibernateProperties.setProperty("hibernate.show_sql","true");
+//        hibernateProperties.setProperty("spring.jpa.show-sql", env.getProperty("spring.jpa.show-sql"));
+//        hibernateProperties.setProperty("spring.jpa.properties.hibernate.format_sql", env.getProperty("spring.jpa.properties.hibernate.format_sql"));
         // hibernateProperties.setProperty("hibernate.globally_quoted_identifiers", "true");
         return hibernateProperties;
     }
@@ -84,4 +88,10 @@ public class PersistenceJPAConfig {
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
 }

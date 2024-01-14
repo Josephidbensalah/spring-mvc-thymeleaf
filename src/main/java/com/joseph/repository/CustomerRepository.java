@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.joseph.entity.Customer;
 
 @Repository("customerRepository")
-public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 }
