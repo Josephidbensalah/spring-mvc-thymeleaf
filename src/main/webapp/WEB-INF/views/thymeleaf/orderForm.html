@@ -38,29 +38,117 @@
                         <input type="checkbox" id="shipped" th:field="*{shipped}"><br>
 
                         <label for="productIds">Products:</label>
-                        <select id="productIds" th:field="*{orderItems}" class="form-control" multiple required>
+                        <select id="productIds" class="form-control" multiple required onchange="handleProductSelection()">
                             <!-- Assume products is a list of ProductDTO objects -->
-<!--                            <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"-->
-<!--                                    th:selected="${orderDTO.productIds != null and orderDTO.productIds.contains(product.id)}"></option>-->
-
-                            <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"
-                                    th:selected="${orderDTO.orderItems != null and orderDTO.orderItems.?[productId == product.id] != null}"></option>
+                            <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
                         </select>
-
+                        <div id="orderItemsContainer">
+                            <!-- This container will hold the dynamically added order items -->
+                        </div>
                         <!-- You can add other fields here based on your requirements -->
-
                         <button class="btn btn-primary" type="submit" th:text="${orderDTO.id == null ? 'Add Order' : 'Update Order'}"></button>
                     </form>
                 </div>
             </div>
         </div>
+        <div class="col-6">
+            <div>
+                <table id="productTable" class="table-bordered">
+                    <thead>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    </thead>
+                    <!-- Table data -->
+                    <tbody>
+
+                    </tbody>
+                    <!--                                <tr th:each="orderItem : ${orderDTO.orderItems}" >-->
+                    <!--                                    <td th:text="${orderItem.productId}"></td>-->
+                    <!--                                    <td th:text="${orderItem.quantity}"></td>-->
+                    <!--                                </tr>-->
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<!-- ... (previous HTML code) ... -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- ... (previous HTML code) ... -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+
+    // Assuming orderDTO and products are defined and have the structure described above
+var orderItems = /*[[${orderDTO.orderItems}]]*/ [];
+var productNames = /*[[${products}]]*/ [];
+
+productNames.forEach(product => {
+    console.log('products:', product);
+    // Other logic here if needed
+});
+
+function handleProductSelection() {
+   var selectElement = document.getElementById('productIds');
+   var tableBody = document.getElementById('productTable').getElementsByTagName('tbody')[0];
+
+   // Clear the table
+    tableBody.innerHTML = '';
+
+   // Loop through each selected option
+   for (var i = 0; i < selectElement.selectedOptions.length; i++) {
+       var option = selectElement.selectedOptions[i];
+         console.error("Option Value : ", option.value);
+       // Find the corresponding product name
+
+        var currProduct;
+       // const productName = productNames.find(product => product.productId == option.value);
+        productNames.forEach(product => {
+            // console.log('products:', product);
+            if(product.id == option.value ) {
+                currProduct = product;
+                console.log('product name :', product.name);
+            }
+            // Other logic here if needed
+        });
+        // console.log('product: ', product);
+
+        var orderItem = orderItems.find(or => or.productId == option.value);
+       // Create a new row for the table
+       var row = tableBody.insertRow(-1);
+
+       // Insert the product name into the row
+       var cell = row.insertCell(0);
+       cell.textContent = currProduct.name;
+
+       // Insert the quantity input field into the row
+       cell = row.insertCell(1);
+       var input = document.createElement('input');
+       input.type = 'number';
+       input.min = '0';
+       input.max = currProduct.quantity  //'1'
+       input.value = orderItem.quantity;
+       console.log('input : ',input);
+       input.required = true;
+       cell.appendChild(input);
+   }
+}
+
+// Set the selected options based on orderItems
+ var selectElementP = document.getElementById('productIds');
+orderItems.forEach(function(item) {
+   var option = selectElementP.querySelector(`option[value="${item.productId}"]`);
+   if (option) {
+       option.selected = true;
+   }
+});
+
+// Call handleProductSelection to populate the table
+handleProductSelection();
+
+/*]]>*/
+</script>
 
 
 </body>
