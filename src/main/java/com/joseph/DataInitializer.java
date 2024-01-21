@@ -34,7 +34,7 @@ public class DataInitializer {
         this.orderItemRepository = orderItemRepository;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         System.out.println("******************* Inside the Execute method ************");
         // Sample Customers

@@ -115,7 +115,7 @@ function handleProductSelection() {
 
        // Create a new row for the table
        var row = tableBody.insertRow(-1);
-       row.setAttribute('data-product-id', currProduct.id);
+       row.id = currProduct.id;
 
        // Insert the product name into the row
        var cell = row.insertCell(0);
@@ -251,7 +251,7 @@ handleProductSelection();
 
         // Remove the corresponding row from the table
         var tableRow = document.getElementById(productId);
-        tableRow.parentNode.removeChild(tableRow);
+        tableRow.remove(tableRow);
     }
 
 /*]]>*/
