@@ -64,7 +64,7 @@ public class CustomerServiceTest {
 
         // Then : Verify the output
         assertNotNull(saveCustomer);
-        assertEquals(saveCustomer.getFirstName(),"Ahmeed");
+        assertEquals(saveCustomer.getFirstName(),"Ahmed");
     }
 
     @Test
